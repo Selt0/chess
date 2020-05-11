@@ -1,7 +1,7 @@
 require_relative 'pieces'
 
 class Board
-  attr_reader :board
+  attr_reader :grid
 
   def initialize(fill_board = true)
     @sentinel = NullPiece.instance
@@ -11,13 +11,13 @@ class Board
   def [](pos)
     raise 'invalid pos' unless valid_pos?(pos)
     x, y = pos
-    board[x][y]
+    grid[x][y]
   end
 
   def []=(pos, piece)
     raise 'invalid pos' unless valid_pos?(pos)
     x, y = pos
-    board[x][y] = piece
+    grid[x][y] = piece
   end
   
   def empty?(pos)
@@ -65,7 +65,7 @@ class Board
   attr_reader :sentinel
 
   def make_starting_grid(fill_board)
-    @board = Array.new(8) { Array.new(8, sentinel) }
+    @grid = Array.new(8) { Array.new(8, sentinel) }
     return unless fill_board
     %i(white black).each do |color|
       fill_back_row(color)
