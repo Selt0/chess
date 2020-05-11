@@ -23,3 +23,4 @@ class Piece
     # subclass implements this with unicode chess char
     raise NotImplementedError
   end
+end
