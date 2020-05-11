@@ -43,7 +43,7 @@ class Board
     elsif !piece.moves.include?(end_pos)
       raise "That piece cannot move like that"
     elsif !piece.valid_moves.include?(end_pos)
-      raise "You cannot move there"
+      raise "You cannot move into check"
     end
 
     move_piece!(start_pos, end_pos)
@@ -73,6 +73,16 @@ class Board
     pieces.select { |p| p.color == color }.all? do |piece|
       piece.valid_moves.empty?
     end
+  end
+
+  def dup
+    new_board = Board.new(false)
+
+    pieces.each do |piece|
+      piece.class.new(piece.color, new_board, piece.pos)
+    end
+
+    new_board
   end
   
   private

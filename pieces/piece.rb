@@ -23,4 +23,16 @@ class Piece
     # subclass implements this with unicode chess char
     raise NotImplementedError
   end
+
+  def valid_moves
+    moves.reject { |end_pos| move_into_check?(end_pos) }
+  end
+
+  private
+
+  def move_into_check(end_pos)
+    board_dummy = board.dup
+    board_dummy.move_piece!(pos, end_pos)
+    board_dummy.in_check?(color)
+  end
 end
