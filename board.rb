@@ -34,6 +34,32 @@ class Board
     self[pos] = piece
   end
 
+  def move_piece(turn_color, start_pos, end_pos)
+    raise "That position is empty" if empty?(start_pos)
+
+    piece = self[start_pos]
+    if piece.color != turn_color
+      raise "That is not your piece!"
+    elsif !piece.moves.include?(end_pos)
+      raise "That piece cannot move like that"
+    elsif !piece.valid_moves.include?(end_pos)
+      raise "You cannot move there"
+    end
+
+    move_piece!(start_pos, end_pos)
+  end
+
+  #move without checks
+  def move_piece!(start_pos, end_pos)
+    piece = self[start_pos]
+
+    self[end_pos] = piece
+    self[start_pos] = sentinel
+    piece.pos = end_pos
+
+    nil
+  end
+  
   private
 
   attr_reader :sentinel
