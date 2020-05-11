@@ -59,6 +59,21 @@ class Board
 
     nil
   end
+
+  def in_check?(color)
+    king_pos = find_king(color).pos
+    pieces.any? do |p|
+      p.color != color && p.moves.include?(king_pos)
+    end
+  end
+
+  def checkmate?(color)
+    return false unless in_check(color)
+
+    pieces.select { |p| p.color == color }.all? do |piece|
+      piece.valid_moves.empty?
+    end
+  end
   
   private
 
@@ -87,5 +102,10 @@ class Board
   def fill_pawns_row(color)
     i = color == :white ? 6 : 1
     8.times { |j| Pawn.new(color, self, [i, j]) }
+  end
+
+  def find_king(color)
+    king_pos = pieces.find { |p| p.color == color && p.is_a?(King) }
+    king_pos || (raise "king not found?")
   end
 end
