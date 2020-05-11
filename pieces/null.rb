@@ -9,7 +9,7 @@ class NullPiece < Piece
     @symbol = ' '
     @color = :none
   end
-  
+
   def empty?
     true
   end

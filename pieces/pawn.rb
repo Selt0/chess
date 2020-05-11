@@ -1,12 +1,11 @@
 require_relative 'piece'
-require_relative 'stepable'
 
 class Pawn < Piece
 
   def symbol
     '♟'.colorize(color)
   end
-  
+
   def moves
     forward_steps + side_attacks
   end
@@ -18,23 +17,23 @@ class Pawn < Piece
   end
 
   def forward_dir
-    color == white ? -1 : 1
+    color == :white ? -1 : 1
   end
 
   def forward_steps
     i, j = pos
-    one_step = [1 + forward_dir, j]
+    one_step = [i + forward_dir, j]
     return [] unless board.valid_pos?(one_step) && board.empty?(one_step)
 
     steps = [one_step]
-    two_step = [1 + 2 * forward_dir, j]
-    steps << two_step if at_start_row && board.empty?(two_step)
+    two_step = [i + 2 * forward_dir, j]
+    steps << two_step if at_start_row? && board.empty?(two_step)
     steps
   end
 
   def side_attacks
     i, j = pos
-    
+
     side_moves = [[i + forward_dir, j - 1], [i + forward_dir, j + 1]]
 
     side_moves.select do |new_pos|

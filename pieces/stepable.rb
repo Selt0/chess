@@ -17,7 +17,7 @@ module Stepable
   private
 
   def move_diffs
-    #sublass implements this
+    # subclass implements this
     raise NotImplementedError
   end
 end
