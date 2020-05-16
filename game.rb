@@ -29,7 +29,7 @@ class Game
     end
 
     display.render
-    puts "#{current_player} is checkmated."
+    puts "#{@current_player_disp} is checkmated."
 
     nil
   end
@@ -46,6 +46,14 @@ class Game
 
   def swap_turn!
     @current_player = current_player == :white ? :black : :white
+  end
+  
+  def current_player_disp
+    if @current_player == :white
+      @current_player_disp = 'Player1'
+    else
+      @current_player_disp = 'Player2'
+    end
   end
 end
 
